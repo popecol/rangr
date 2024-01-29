@@ -1,4 +1,7 @@
-url: https://ropensci.github.io/rangr/
+url: ~
+template:
+  bootstrap: 5
+
 
 reference:
   - title: Simulation preparation
