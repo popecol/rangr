@@ -9,7 +9,6 @@ doc
 Meta
 dev_scripts/
 test
-docs
 /doc/
 /Meta/
 ropensci_submition.Rmd
