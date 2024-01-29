@@ -28,10 +28,6 @@ The study is supported by the National Science Centre, Poland, grant no.
 
 # Installation
 
-## Released version
-
-Not released yet, but we’re working on it.
-
 ## Development version
 
 You can install the development version from R-universe or GitHub with:
