@@ -1,12 +1,14 @@
 #' Update `sim_data` Object
 #'
+#' @description This function updates a `sim_data` object.
+#'
 #' @param object `sim_data` object; returned by [`initialise`] function
 #' @param ... further arguments passed to or from other methods;
 #' currently none specified
-#' @param evaluate logical vector of length 1 if `TRUE` evaluate the new call
-#' else return the call
+#' @param evaluate logical vector of length 1; if `TRUE` evaluates the new call, otherwise
+#' returns the call
 #'
-#' @return If `evaluate = TRUE` the updated `sim_data` object,
+#' @return If `evaluate = TRUE` then the updated `sim_data` object,
 #' otherwise the updated call.
 #'
 #' @export
@@ -76,7 +78,9 @@ update.sim_data <- function(object, ..., evaluate = TRUE) {
 
 
     # dlist: given, inherited or to calculate
-    if (!"dlist" %in% names(extras)) {
+    if (!"dlist" %in% names(extras)) { # not given dlist
+
+      # check if old dlist should be removed
       rm_old_dlist <- any(!is.na(match(
         names(extras),
         c(
@@ -91,14 +95,24 @@ update.sim_data <- function(object, ..., evaluate = TRUE) {
 
       if (rm_old_dlist) {
         call$dlist <- NULL
-      } else {
+      } else { # given dlist
         call$dlist <- object$dlist
       }
     }
 
+    # unwrap K_map if not updated
+    if(!"K_map" %in% names(extras)) {
+      call$K_map <- unwrap(object$K_map)
+    }
+
+    if(!"n1_map" %in% names(extras)) {
+      n1_map <- unwrap(object$K_map)
+      values(n1_map) <- object$n1_map
+      call$n1_map <- n1_map
+    }
+
     # transform call to call object
     call <- as.call(call)
-
 
 
     # evaluate or return the call

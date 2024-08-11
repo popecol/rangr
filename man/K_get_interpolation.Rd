@@ -10,30 +10,31 @@ K_get_interpolation(K_map, K_time_points = NULL, time = NULL)
 \item{K_map}{\code{\link[terra:SpatRaster-class]{SpatRaster}} object with
 carrying capacity maps for each \code{K_time_points}}
 
-\item{K_time_points}{integer vector; time for each layer in \code{K_map}}
+\item{K_time_points}{integer vector; time for each layer in \code{K_map}, should
+contain unique values}
 
 \item{time}{integer vector of length 1; number of total time steps required
-(this is defined when evoking the function \code{sim}).}
+(this is defined when evoking the function \code{\link{sim}}).}
 }
 \value{
 \code{\link[terra:SpatRaster-class]{SpatRaster}} object with number of layers
-equal to \code{time}
+equal to \code{time}.
 }
 \description{
 This function linearly interpolates values in a series of carrying
 capacity maps.
 }
 \details{
-To simulate dynamic environmental scenarios (i.e. climate change, land use
+To simulate dynamic environmental scenarios (e.g. climate change, land use
 change, ecological disturbance, etc.) one needs to provide time-varying
 carrying capacity maps.
 
-Either \code{K_time_points} or \code{time} parameter are needed to calculate
-interpolation. If interpolation should  be calculated between two carrying
+Either \code{K_time_points} or the \code{time} parameter is needed to perform
+interpolation. If the interpolation should be calculated between two carrying
 capacity maps, there is no need to pass the time points, because 1 will
-be set as a starting time point and \code{time} will be used as the ending point.
-On the other hand, in the absence of the \code{time} argument, the last element of
-\code{K_time_points} is considered to be the ending point for the interpolation.
+be set as the starting time point and \code{time} will be used as the ending point.
+On the other hand, in the absence of the \code{time} argument, the maximum element
+of \code{K_time_points} is considered to be the ending point for the interpolation.
 }
 \examples{
 \dontrun{

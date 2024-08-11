@@ -7,6 +7,7 @@
 disp(
   N_t,
   id,
+  id_matrix,
   data_table,
   kernel,
   dens_dep,
@@ -14,35 +15,39 @@ disp(
   id_within,
   within_mask,
   border,
+  planar,
+  dist_resolution,
   max_dist,
-  resolution,
+  dist_bin,
   ncells_in_circle,
   cl = NULL
 )
 }
 \arguments{
-\item{N_t}{integer matrix of population numbers at a single time step;
-NA stands for cells that are outside the study area}
+\item{N_t}{integer matrix representing population numbers at a single time step;
+NA indicates cells outside the study area}
 
 \item{id}{\code{\link[terra:SpatRaster-class]{SpatRaster}} object
 (of the same size as \code{N_t}) with cell identifiers}
 
+\item{id_matrix}{\code{id} in matrix format}
+
 \item{data_table}{matrix that contains information about all cells
 in current time points}
 
-\item{kernel}{a function defining dispersal kernel}
+\item{kernel}{function defining dispersal kernel}
 
 \item{dens_dep}{character vector of length 1 specifying if the probability
-of settling in a target square is (case-sensitive, default \code{"K2N"}):
+of settling in a target grid cell is (case-sensitive, default \code{"K2N"}):
 \itemize{
 \item "none" - fully random,
-\item "K" - proportional to the carrying capacity of a target square,
+\item "K" - proportional to the carrying capacity of a target cell,
 \item "K2N" - density-dependent, i.e. proportional to the ratio of
-carrying capacity of a target square to the number of individuals
-already present in a target square
+carrying capacity of a target cell to the number of individuals
+already present in a target cell
 }}
 
-\item{dlist}{a list with identifiers of target cells at a specified
+\item{dlist}{list with identifiers of target cells at a specified
 distance from a focal cell}
 
 \item{id_within}{integer vector with identifiers of cells inside the
@@ -53,18 +58,26 @@ study area}
 \item{border}{character vector of length 1 defining how to deal
 with borders (case-sensitive, default \code{"absorbing"}):
 \itemize{
-\item "absorbing" - individuals that disperse outside the study area
-are removed from the population
 \item "reprising" - cells outside the study area are not allowed
 as targets for dispersal
+\item "absorbing" - individuals that disperse outside the study area
+are removed from the population
 }}
 
-\item{max_dist}{a distance (in the same units as used in the raster \code{id})
+\item{planar}{logical vector of length 1; \code{TRUE} if input maps are planar
+rasters, \code{FALSE} if input maps are lon/lat rasters}
+
+\item{dist_resolution}{integer vector of length 1; dimension of one side of
+one cell of \code{id}; in case of an irregular grid or lon/lat raster it is
+calculated during \code{\link[=initialise]{initialisation}}}
+
+\item{max_dist}{distance (in the same units as used in the raster \code{id})
 specifying the maximum range at which identifiers of target dispersal cells
 are determined in advance (see \code{\link{initialise}})}
 
-\item{resolution}{integer vector of length 1; spatial resolution of
-\code{id} raster}
+\item{dist_bin}{numeric vector of length 1 with value \verb{>= 0}; in case of
+an irregular grid or lon/lat raster it is
+calculated during \code{\link[=initialise]{initialisation}}}
 
 \item{ncells_in_circle}{numeric vector; number of cells on each distance}
 
@@ -76,26 +89,26 @@ The function returns a list that contains two matrices:
 
 \code{em} - emigration matrix with the number of individuals that dispersed
 from each cell
+
 \code{im} - immigration matrix with the number of individuals that dispersed
 to each cell
 }
 \description{
-The function simulates dispersal, for every square calculating the no. of
-individuals that disperse out of this square and the no. of individuals that
-disperse into this square.
+This function simulates dispersal for each grid cell by calculating the number
+of individuals dispersing out of the cell and the number of individuals
+dispersing into the cell.
 }
 \details{
-This is the function used by \code{\link{sim}} internally and is not intended to be
+The function is used by \code{\link{sim}} internally and is not intended to be
 called by the user. The parameters for this function are passed from
 a \code{sim_data} object created by \code{\link{initialise}}.
 
 Dispersal distance is expressed in original spatial units of the
-\code{\link[terra:SpatRaster-class]{SpatRaster}} provided to \code{\link{sim}} function
-(\code{n1_map} and \code{K_map}), however, it is internally converted to units
-of the simulation (i.e. to the size of a single cell) by calculating
-\code{round(distance/resolution)}. Thus, if the selected dispersal distance is
-smaller than \code{resolution/2}, it effectively means that an individual
-does not disperse, i.e. it lands in the same cell as it was before.
+\code{\link[terra:SpatRaster-class]{SpatRaster}} provided to the \code{\link{sim}} function
+(\code{n1_map} and \code{K_map}). However, it is internally converted to units
+of the simulation (i.e. the size of a single cell) by calculating \code{round(distance/resolution)}. If the selected dispersal distance is
+smaller than \code{resolution/2}, the individual
+does not disperse effectively and remains in the same cell.
 The dispersal rate (proportion of dispersing individuals) can be estimated
 from the dispersal kernel probability function by calculating the probability
 that the dispersal distance is greater than \code{resolution/2}.
@@ -118,7 +131,8 @@ sim_data <- initialise(
 # disp
 disp_output <- disp(
   N_t = sim_data$n1_map,
-  id = sim_data$id,
+  id = unwrap(sim_data$id),
+  id_matrix = as.matrix(unwrap(sim_data$id), wide = TRUE),
   data_table = sim_data$data_table,
   kernel = sim_data$kernel,
   dens_dep = sim_data$dens_dep,
@@ -126,8 +140,10 @@ disp_output <- disp(
   id_within = sim_data$id_within,
   within_mask = sim_data$within_mask,
   border = sim_data$border,
+  planar = sim_data$planar,
+  dist_resolution = sim_data$dist_resolution,
   max_dist = sim_data$max_dist,
-  resolution = sim_data$resolution,
+  dist_bin = sim_data$dist_bin,
   ncells_in_circle = sim_data$ncells_in_circle
 )
 

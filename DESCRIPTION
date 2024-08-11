@@ -1,7 +1,7 @@
 Package: rangr
 Type: Package
 Title: Mechanistic Simulation of Species Range Dynamics
-Version: 1.0.3
+Version: 1.0.5
 Authors@R: c(
     person("Katarzyna", "Markowska", email = "katarzyna.markowska@amu.edu.pl", role = c("aut", "cre")),
     person("Lechosław", "Kuczyński", email = "lechu@amu.edu.pl", role = "aut"),
@@ -29,7 +29,7 @@ Suggests:
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.0
+RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE, roclets = c("namespace", "rd", "srr::srr_stats_roclet"))
 Depends: 
     R (>= 3.5.0)

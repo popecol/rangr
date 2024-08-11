@@ -52,7 +52,7 @@ Here's an example of how to use the `rangr` package.
 
 ## Input maps
 
-Example maps available in rangr:
+Example maps available in rangr in the Cartesian coordinate system:
 
 -   `n1_small.tif`
 -   `n1_big.tif`
@@ -60,11 +60,19 @@ Example maps available in rangr:
 -   `K_small_changing.tif`
 -   `K_big.tif`
 
+Example maps available in rangr in the longitude/latitude coordinate system:
+
+-   `n1_small_lon_lat.tif`
+-   `n1_big_lon_lat.tif`
+-   `K_small_lon_lat.tif`
+-   `K_small_changing_lon_lat.tif`
+-   `K_big_lon_lat.tif`
+
 ```{r SP1.0, eval=FALSE, include=FALSE}
 #' @srrstats {SP1.0} Specified domain of applicability
 ```
 
-Note that the input maps must be in the geodetic (i.e. Cartesian) coordinate system. You can find additional information about these data sets in help files:
+You can find additional information about these data sets in help files:
 
 ```{r help_input_maps, eval=FALSE}
 library(rangr)

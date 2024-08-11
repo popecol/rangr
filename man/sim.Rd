@@ -8,9 +8,10 @@ sim(
   obj,
   time,
   burn = 0,
+  return_mu = FALSE,
   cl = NULL,
-  progress_bar = FALSE,
-  quiet = TRUE
+  progress_bar = TRUE,
+  quiet = FALSE
 )
 }
 \arguments{
@@ -21,15 +22,17 @@ simulation parameters and necessary data}
 simulated}
 
 \item{burn}{positive integer vector of length 1; the number of burn-in time
-steps that are
-discarded from the output}
+steps that are discarded from the output}
+
+\item{return_mu}{logical vector of length 1; if \code{TRUE} demographic
+process return expected values; if \code{FALSE} the \code{\link[stats:Poisson]{rpois}} function
+should be used}
 
 \item{cl}{an optional cluster object created by
 \code{\link[parallel:makeCluster]{makeCluster}} needed for parallel calculations}
 
 \item{progress_bar}{logical vector of length 1 determines if progress bar
-for simulation
-should be displayed}
+for simulation should be displayed}
 
 \item{quiet}{logical vector of length 1; determines if warnings should
 be displayed}
@@ -47,7 +50,7 @@ the spatial aspect of the output and the third dimension represents time.
 }
 
 In case of a total extinction, a simulation is stopped before reaching
-the specified no. of time steps. If the population died out before reaching
+the specified number of time steps. If the population died out before reaching
 the \code{burn} threshold, then nothing can be returned and an error occurs.
 }
 \description{
@@ -105,35 +108,45 @@ sim_data <- initialise(
 )
 
 # simulation
-sim_1 <- sim(obj = sim_data, time = 100)
+sim_1 <- sim(obj = sim_data, time = 20)
 
-# simulation with burned time steps and progress bar
-sim_2 <- sim(obj = sim_data, time = 100, burn = 20, progress_bar = TRUE)
+# simulation with burned time steps
+sim_2 <- sim(obj = sim_data, time = 20, burn = 10)
 
 # example with parallelization
 library(parallel)
 cl <- makeCluster(detectCores())
 
 # parallelized simulation
-sim_3 <- sim(obj = sim_data, time = 100, cl = cl, progress_bar = TRUE)
+sim_3 <- sim(obj = sim_data, time = 20, cl = cl)
 stopCluster(cl)
 
 
 # visualisation
-plot(n1_small)
-
-plot(to_rast(
+plot(
   sim_1,
-  time_points = 100,
+  time_points = 20,
   template = sim_data$K_map
-))
+)
 
-plot(to_rast(
+plot(
   sim_1,
-  time_points = c(1, 10, 50, 100),
+  time_points = c(1, 5, 10, 20),
   template = sim_data$K_map
-), range = range(sim_1$N_map, na.rm = TRUE))
+)
+
+plot(
+  sim_1,
+  template = sim_data$K_map
+)
 
 }
 
+}
+\references{
+Solymos P, Zawadzki Z (2023). pbapply: Adding Progress Bar to '*apply' Functions. R
+package version 1.7-2, \url{https://CRAN.R-project.org/package=pbapply}.
+}
+\seealso{
+\link[=get_observations]{get_observations}
 }

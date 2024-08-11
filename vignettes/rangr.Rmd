@@ -62,7 +62,7 @@ library(terra)
 
 One of the most important input parameters for simulation are maps specifying the abundance of the virtual species at the starting point of the simulation and carrying capacity of environment in which simulation takes place. In this section, we will not generate them from scratch. Instead, we will use maps provided with the package.
 
-Example maps available in rangr:
+Example maps available in rangr in the Cartesian coordinate system:
 
 -   `n1_small.tif`
 -   `n1_big.tif`
@@ -70,11 +70,19 @@ Example maps available in rangr:
 -   `K_small_changing.tif`
 -   `K_big.tif`
 
+Example maps available in rangr in the longitude/latitude coordinate system:
+
+-   `n1_small_lon_lat.tif`
+-   `n1_big_lon_lat.tif`
+-   `K_small_lon_lat.tif`
+-   `K_small_changing_lon_lat.tif`
+-   `K_big_lon_lat.tif`
+
 ```{r SP1.0, eval=FALSE, include=FALSE}
 #' @srrstats {SP1.0} Specified domain of applicability
 ```
 
-Note that the input maps must be in the Cartesian coordinate system. You can find additional information about these data sets in help files:
+You can find additional information about these data sets in help files:
 
 ```{r help_input_maps, eval=FALSE}
 ?n1_small.tif
@@ -396,7 +404,7 @@ To change these parameters (along with the carrying capacity map prepared in the
 sim_data_02 <- update(sim_data_01,
   n1_map = K_small,
   K_map = K_small_changing_interpolated,
-  K_sd = 1.1,
+  K_sd = 0.1,
   r = log(5),
   r_sd = 0.05,
   growth = "ricker",
@@ -422,7 +430,7 @@ library(parallel)
 cl <- makeCluster(detectCores() - 2)
 
 sim_result_02 <- 
-  sim(obj = sim_data_02, time = 200, progress_bar = TRUE, cl = cl)
+  sim(obj = sim_data_02, time = 200, cl = cl)
 
 stopCluster(cl)
 ```
@@ -469,7 +477,7 @@ points <- data.frame(
 str(points)
 ```
 
-We can see that for each data (study site and time step) an observation has been made and is now stored in the "value" column.
+We can see that for each data (study site and time step) an observation has been made and is now stored in the "n" column.
 
 Now that we have selected study sites along with time steps, we can pass this data to the `get_observations()` function.
 

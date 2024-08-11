@@ -45,7 +45,7 @@ Here’s an example of how to use the `rangr` package.
 
 ## Input maps
 
-Example maps available in rangr:
+Example maps available in rangr in the Cartesian coordinate system:
 
 - `n1_small.tif`
 - `n1_big.tif`
@@ -53,9 +53,16 @@ Example maps available in rangr:
 - `K_small_changing.tif`
 - `K_big.tif`
 
-Note that the input maps must be in the geodetic (i.e. Cartesian)
-coordinate system. You can find additional information about these data
-sets in help files:
+Example maps available in rangr in the longitude/latitude coordinate
+system:
+
+- `n1_small_lon_lat.tif`
+- `n1_big_lon_lat.tif`
+- `K_small_lon_lat.tif`
+- `K_small_changing_lon_lat.tif`
+- `K_big_lon_lat.tif`
+
+You can find additional information about these data sets in help files:
 
 ``` r
 library(rangr)
@@ -125,8 +132,8 @@ summary(sim_data_01)
 #> A                    -
 #> kernel_fun        rexp
 #> dens_dep           K2N
-#> border       absorbing
-#> max_dist          2000
+#> border       reprising
+#> max_dist          5000
 #> changing_env     FALSE
 #> dlist             TRUE
 ```
