@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">rangr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -92,7 +92,7 @@
 <div class="section level2">
 <h2 id="input-maps">Input maps<a class="anchor" aria-label="anchor" href="#input-maps"></a>
 </h2>
-<p>Example maps available in rangr:</p>
+<p>Example maps available in rangr in the Cartesian coordinate system:</p>
 <ul>
 <li><code>n1_small.tif</code></li>
 <li><code>n1_big.tif</code></li>
@@ -100,7 +100,15 @@
 <li><code>K_small_changing.tif</code></li>
 <li><code>K_big.tif</code></li>
 </ul>
-<p>Note that the input maps must be in the geodetic (i.e. Cartesian) coordinate system. You can find additional information about these data sets in help files:</p>
+<p>Example maps available in rangr in the longitude/latitude coordinate system:</p>
+<ul>
+<li><code>n1_small_lon_lat.tif</code></li>
+<li><code>n1_big_lon_lat.tif</code></li>
+<li><code>K_small_lon_lat.tif</code></li>
+<li><code>K_small_changing_lon_lat.tif</code></li>
+<li><code>K_big_lon_lat.tif</code></li>
+</ul>
+<p>You can find additional information about these data sets in help files:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/rangr" class="external-link">rangr</a></span><span class="op">)</span></span>
 <span></span>
@@ -148,8 +156,8 @@
 <span><span class="co">#&gt; A                    -</span></span>
 <span><span class="co">#&gt; kernel_fun        rexp</span></span>
 <span><span class="co">#&gt; dens_dep           K2N</span></span>
-<span><span class="co">#&gt; border       absorbing</span></span>
-<span><span class="co">#&gt; max_dist          2000</span></span>
+<span><span class="co">#&gt; border       reprising</span></span>
+<span><span class="co">#&gt; max_dist          5000</span></span>
 <span><span class="co">#&gt; changing_env     FALSE</span></span>
 <span><span class="co">#&gt; dlist             TRUE</span></span></code></pre></div>
 </div>

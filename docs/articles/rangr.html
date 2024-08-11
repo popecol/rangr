@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rangr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@
                         <h4 data-toc-skip class="author">Katarzyna
 Markowska</h4>
             
-            <h4 data-toc-skip class="date">29-01-2024</h4>
+            <h4 data-toc-skip class="date">11-08-2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/rangr/blob/HEAD/vignettes/rangr.Rmd" class="external-link"><code>vignettes/rangr.Rmd</code></a></small>
       <div class="d-none name"><code>rangr.Rmd</code></div>
@@ -123,7 +123,8 @@ specifying the abundance of the virtual species at the starting point of
 the simulation and carrying capacity of environment in which simulation
 takes place. In this section, we will not generate them from scratch.
 Instead, we will use maps provided with the package.</p>
-<p>Example maps available in rangr:</p>
+<p>Example maps available in rangr in the Cartesian coordinate
+system:</p>
 <ul>
 <li><code>n1_small.tif</code></li>
 <li><code>n1_big.tif</code></li>
@@ -131,8 +132,16 @@ Instead, we will use maps provided with the package.</p>
 <li><code>K_small_changing.tif</code></li>
 <li><code>K_big.tif</code></li>
 </ul>
-<p>Note that the input maps must be in the Cartesian coordinate system.
-You can find additional information about these data sets in help
+<p>Example maps available in rangr in the longitude/latitude coordinate
+system:</p>
+<ul>
+<li><code>n1_small_lon_lat.tif</code></li>
+<li><code>n1_big_lon_lat.tif</code></li>
+<li><code>K_small_lon_lat.tif</code></li>
+<li><code>K_small_changing_lon_lat.tif</code></li>
+<li><code>K_big_lon_lat.tif</code></li>
+</ul>
+<p>You can find additional information about these data sets in help
 files:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">?</span><span class="va">n1_small.tif</span></span>
@@ -438,7 +447,7 @@ works, we set the <code>type</code> argument to
 <span><span class="co">#&gt;  $ x        : num  279500 271500 279500 274500 279500 ...</span></span>
 <span><span class="co">#&gt;  $ y        : num  623500 618500 612500 619500 610500 ...</span></span>
 <span><span class="co">#&gt;  $ time_step: int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">#&gt;  $ value    : num  0 0 0 0 10 0 0 0 0 0 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  $ n        : num  0 0 0 0 10 0 0 0 0 0 ...</span></span></code></pre></div>
 <p>The returned <code>data.frame</code> contains the geodetic
 coordinates of the survey sites, the population abundances, and the time
 steps from which the abundances were observed. To confirm that the
@@ -596,7 +605,7 @@ rising carrying capacity during 80-200 time steps.</p>
 <span>  <span class="va">K_small_changing_altered</span>, </span>
 <span>  K_time_points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">20</span>, <span class="fl">80</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in K_check(K_map, K_time_points, time): Argument "time" is no specified</span></span>
-<span><span class="co">#&gt; - last number from "K_time_points" is used as "time"</span></span>
+<span><span class="co">#&gt; - maximum from "K_time_points" is used as "time"</span></span>
 <span><span class="va">K_small_changing_interpolated</span></span>
 <span><span class="co">#&gt; class       : SpatRaster </span></span>
 <span><span class="co">#&gt; dimensions  : 15, 10, 200  (nrow, ncol, nlyr)</span></span>
@@ -680,7 +689,7 @@ to demonstrate its use.</p>
 <code class="sourceCode R"><span><span class="va">sim_data_02</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/terra/man/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">sim_data_01</span>,</span>
 <span>  n1_map <span class="op">=</span> <span class="va">K_small</span>,</span>
 <span>  K_map <span class="op">=</span> <span class="va">K_small_changing_interpolated</span>,</span>
-<span>  K_sd <span class="op">=</span> <span class="fl">1.1</span>,</span>
+<span>  K_sd <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>  r <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>,</span>
 <span>  r_sd <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  growth <span class="op">=</span> <span class="st">"ricker"</span>,</span>
@@ -742,7 +751,7 @@ used when running simulations:</p>
 <span><span class="va">cl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makeCluster</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sim_result_02</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="fu"><a href="../reference/sim.html">sim</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">sim_data_02</span>, time <span class="op">=</span> <span class="fl">200</span>, progress_bar <span class="op">=</span> <span class="cn">TRUE</span>, cl <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/sim.html">sim</a></span><span class="op">(</span>obj <span class="op">=</span> <span class="va">sim_data_02</span>, time <span class="op">=</span> <span class="fl">200</span>, cl <span class="op">=</span> <span class="va">cl</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">stopCluster</a></span><span class="op">(</span><span class="va">cl</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
@@ -831,7 +840,7 @@ observation sites for each time step.</p>
 <span><span class="co">#&gt;  $ y        : num  623500 618500 612500 619500 610500 ...</span></span>
 <span><span class="co">#&gt;  $ time_step: int  1 1 1 1 1 1 1 1 1 1 ...</span></span></code></pre></div>
 <p>We can see that for each data (study site and time step) an
-observation has been made and is now stored in the “value” column.</p>
+observation has been made and is now stored in the “n” column.</p>
 <p>Now that we have selected study sites along with time steps, we can
 pass this data to the <code><a href="../reference/get_observations.html">get_observations()</a></code> function.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
@@ -850,7 +859,7 @@ pass this data to the <code><a href="../reference/get_observations.html">get_obs
 <span><span class="co">#&gt;  $ x        : num  279500 271500 279500 274500 279500 ...</span></span>
 <span><span class="co">#&gt;  $ y        : num  623500 618500 612500 619500 610500 ...</span></span>
 <span><span class="co">#&gt;  $ time_step: int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">#&gt;  $ value    : num  86.7 53.7 116.9 0 77 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  $ n        : num  86.7 53.7 116.9 0 77 ...</span></span></code></pre></div>
 <p>We will now demonstrate the latest (for now) version of the
 <code><a href="../reference/get_observations.html">get_observations()</a></code> function. It is designed to simulate
 real monitoring surveys by mimicking the observation process based on
@@ -878,7 +887,7 @@ required format (<code>data.frame</code> with ‘x’ and ‘y’ columns).</p>
 <span><span class="co">#&gt;  $ y        : num  623500 623500 623500 623500 623500 ...</span></span>
 <span><span class="co">#&gt;  $ time_step: int  1 2 3 4 5 6 7 8 11 12 ...</span></span>
 <span><span class="co">#&gt;  $ obs_id   : chr  "obs1" "obs1" "obs1" "obs2" ...</span></span>
-<span><span class="co">#&gt;  $ value    : num  109.1 79.6 58.5 34.3 48.8 ...</span></span>
+<span><span class="co">#&gt;  $ n        : num  109.1 79.6 58.5 34.3 48.8 ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_04</span><span class="op">$</span><span class="va">obs_id</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 62</span></span></code></pre></div>
 <p>Here we can see that 62 unique observers made ‘observations’. For
@@ -907,7 +916,7 @@ number of unique observers.</p>
 <span><span class="co">#&gt;  $ y        : num  623500 623500 623500 623500 623500 ...</span></span>
 <span><span class="co">#&gt;  $ time_step: int  1 2 3 4 5 6 7 8 9 10 ...</span></span>
 <span><span class="co">#&gt;  $ obs_id   : chr  "obs1" "obs1" "obs1" "obs1" ...</span></span>
-<span><span class="co">#&gt;  $ value    : num  116.2 92.7 43.3 32.2 48.4 ...</span></span>
+<span><span class="co">#&gt;  $ n        : num  116.2 92.7 43.3 32.2 48.4 ...</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">sample_04</span><span class="op">$</span><span class="va">obs_id</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 45</span></span></code></pre></div>
 <p>We now have 45 unique observers, and the number of consecutive years

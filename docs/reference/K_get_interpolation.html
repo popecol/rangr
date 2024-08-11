@@ -12,7 +12,7 @@ capacity maps."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/l
     
     <a class="navbar-brand me-2" href="../index.html">rangr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,12 +68,13 @@ carrying capacity maps for each <code>K_time_points</code></p></dd>
 
 
 <dt>K_time_points</dt>
-<dd><p>integer vector; time for each layer in <code>K_map</code></p></dd>
+<dd><p>integer vector; time for each layer in <code>K_map</code>, should
+contain unique values</p></dd>
 
 
 <dt>time</dt>
 <dd><p>integer vector of length 1; number of total time steps required
-(this is defined when evoking the function <code>sim</code>).</p></dd>
+(this is defined when evoking the function <code><a href="sim.html">sim</a></code>).</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -81,21 +82,19 @@ carrying capacity maps for each <code>K_time_points</code></p></dd>
     
 
 <p><code><a href="https://rdrr.io/pkg/terra/man/SpatRaster-class.html" class="external-link">SpatRaster</a></code> object with number of layers
-equal to <code>time</code></p>
-
-
+equal to <code>time</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>To simulate dynamic environmental scenarios (i.e. climate change, land use
+    <p>To simulate dynamic environmental scenarios (e.g. climate change, land use
 change, ecological disturbance, etc.) one needs to provide time-varying
 carrying capacity maps.</p>
-<p>Either <code>K_time_points</code> or <code>time</code> parameter are needed to calculate
-interpolation. If interpolation should  be calculated between two carrying
+<p>Either <code>K_time_points</code> or the <code>time</code> parameter is needed to perform
+interpolation. If the interpolation should be calculated between two carrying
 capacity maps, there is no need to pass the time points, because 1 will
-be set as a starting time point and <code>time</code> will be used as the ending point.
-On the other hand, in the absence of the <code>time</code> argument, the last element of
-<code>K_time_points</code> is considered to be the ending point for the interpolation.</p>
+be set as the starting time point and <code>time</code> will be used as the ending point.
+On the other hand, in the absence of the <code>time</code> argument, the maximum element
+of <code>K_time_points</code> is considered to be the ending point for the interpolation.</p>
     </div>
 
     <div class="section level2">
