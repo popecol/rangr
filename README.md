@@ -14,7 +14,8 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![codecov](https://codecov.io/gh/ropensci/rangr/graph/badge.svg?token=noq7E0HSe2)](https://app.codecov.io/gh/ropensci/rangr)
 [![DOI](https://zenodo.org/badge/645848364.svg)](https://zenodo.org/doi/10.5281/zenodo.10569367)
 [![Static
-Badge](https://img.shields.io/badge/Publication-10.1111%2F2041--210X.14475-94ae63)](https://doi.org/10.1111/2041-210X.14475)
+Badge](https://img.shields.io/badge/Publication-10.1111%2F2041--210X.14475-94ae63)](https://doi.org/10.1111/2041-210X.14475)[![Ask
+DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ropensci/rangr)
 
 <!-- badges: end -->
 
@@ -92,7 +93,7 @@ and their dimensions, you can use the following commands:
 
 ``` r
 library(terra)
-#> terra 1.7.55
+#> terra 1.9.27
 
 n1_small <- rast(system.file("input_maps/n1_small.tif", package = "rangr"))
 K_small <-  rast(system.file("input_maps/K_small.tif", package = "rangr"))
@@ -105,7 +106,7 @@ visualize these maps:
 plot(c(n1_small, K_small))
 ```
 
-<img src="man/figures/README-vis_input_maps-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="man/figures/README-vis_input_maps-1.png" alt="" width="70%" style="display: block; margin: auto;" />
 
 ## Initialise
 
@@ -132,11 +133,11 @@ summary(sim_data_01)
 #> Summary of sim_data object
 #> 
 #> n1 map summary: 
-#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
 #>  0.0000  0.0000  0.0000  0.1449  0.0000 10.0000      12 
 #> 
 #> Carrying capacity map summary: 
-#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+#>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
 #>    0.00    0.00   56.00   44.84   72.00  100.00      12 
 #>                       
 #> growth        gompertz
@@ -166,7 +167,7 @@ To see the summary of the `sim_result_01` object:
 summary(sim_result_01)
 ```
 
-<img src="man/figures/README-summary_sim_res-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="man/figures/README-summary_sim_res-1.png" alt="" width="70%" style="display: block; margin: auto;" />
 
     #> Summary of sim_results object
     #> 
@@ -176,7 +177,7 @@ summary(sim_result_01)
     #> extinction     FALSE
     #> 
     #> Abundances summary: 
-    #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    #>    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.     NAs 
     #>    0.00    0.00   12.00   10.45   19.00   54.00    1200
 
 Note that this is a simple example and there are many more parameters
@@ -197,16 +198,16 @@ plot(sim_result_01,
 )
 ```
 
-<img src="man/figures/README-vis_sim_res_01-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="man/figures/README-vis_sim_res_01-1.png" alt="" width="70%" style="display: block; margin: auto;" />
 
-    #> class       : SpatRaster 
-    #> dimensions  : 15, 10, 4  (nrow, ncol, nlyr)
+    #> class       : SpatRaster
+    #> size        : 15, 10, 4  (nrow, ncol, nlyr)
     #> resolution  : 1000, 1000  (x, y)
     #> extent      : 270000, 280000, 610000, 625000  (xmin, xmax, ymin, ymax)
-    #> coord. ref. : ETRS89 / Poland CS92 
+    #> coord. ref. : ETRS89 / Poland CS92
     #> source(s)   : memory
-    #> names       : t_1, t_10, t_25, t_50 
-    #> min values  :   0,    0,    0,    0 
+    #> names       : t_1, t_10, t_25, t_50
+    #> min values  :   0,    0,    0,    0
     #> max values  :  10,   19,   27,   36
 
 You can adjust the `breaks` parameter to get more breaks on the
@@ -221,16 +222,16 @@ plot(sim_result_01,
 )
 ```
 
-<img src="man/figures/README-vis_sim_res_02-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="man/figures/README-vis_sim_res_02-1.png" alt="" width="70%" style="display: block; margin: auto;" />
 
-    #> class       : SpatRaster 
-    #> dimensions  : 15, 10, 4  (nrow, ncol, nlyr)
+    #> class       : SpatRaster
+    #> size        : 15, 10, 4  (nrow, ncol, nlyr)
     #> resolution  : 1000, 1000  (x, y)
     #> extent      : 270000, 280000, 610000, 625000  (xmin, xmax, ymin, ymax)
-    #> coord. ref. : ETRS89 / Poland CS92 
+    #> coord. ref. : ETRS89 / Poland CS92
     #> source(s)   : memory
-    #> names       : t_1, t_10, t_25, t_50 
-    #> min values  :   0,    0,    0,    0 
+    #> names       : t_1, t_10, t_25, t_50
+    #> min values  :   0,    0,    0,    0
     #> max values  :  10,   19,   27,   36
 
 If you prefer working on raster you can also transform any `sim_result`
@@ -246,14 +247,14 @@ my_rast <- to_rast(
 
 # print raster
 print(my_rast)
-#> class       : SpatRaster 
-#> dimensions  : 15, 10, 100  (nrow, ncol, nlyr)
+#> class       : SpatRaster
+#> size        : 15, 10, 100  (nrow, ncol, nlyr)
 #> resolution  : 1000, 1000  (x, y)
 #> extent      : 270000, 280000, 610000, 625000  (xmin, xmax, ymin, ymax)
-#> coord. ref. : ETRS89 / Poland CS92 
+#> coord. ref. : ETRS89 / Poland CS92
 #> source(s)   : memory
-#> names       : t_1, t_2, t_3, t_4, t_5, t_6, ... 
-#> min values  :   0,   0,   0,   0,   0,   0, ... 
+#> names       : t_1, t_2, t_3, t_4, t_5, t_6, ...
+#> min values  :   0,   0,   0,   0,   0,   0, ...
 #> max values  :  10,  11,  14,  16,  20,  13, ...
 ```
 
@@ -264,7 +265,7 @@ And then visualise it using `plot()` function:
 plot(my_rast, c(1, 10, 25, 50))
 ```
 
-<img src="man/figures/README-vis_sim_res_04-1.png" width="70%" style="display: block; margin: auto;" />
+<img src="man/figures/README-vis_sim_res_04-1.png" alt="" width="70%" style="display: block; margin: auto;" />
 
 # Vignettes
 
